@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapPin } from "lucide-react";
+import { MapPin, Navigation, LocateFixed } from "lucide-react";
 
 export default function LocationFinder() {
   const [location, setLocation] = useState("");
@@ -39,42 +39,52 @@ export default function LocationFinder() {
   };
 
   return (
-    <div className="bg-white/40 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-white/40">
-      <MapPin className="text-green-700 mb-4" size={36} />
+    <div className="relative overflow-hidden bg-[#1b0f2d]/80 backdrop-blur-2xl rounded-[2rem] p-6 border border-purple-400/20 shadow-[0_0_35px_rgba(168,85,247,0.12)] hover:border-lime-300/35 transition">
+      <div className="absolute -top-12 -right-12 w-40 h-40 bg-lime-300/10 rounded-full blur-3xl"></div>
 
-      <h3 className="text-xl font-bold mb-2">Delivery Location</h3>
+      <div className="relative z-10">
+        <div className="w-14 h-14 rounded-2xl bg-lime-300/10 border border-lime-300/30 flex items-center justify-center text-lime-300 mb-4 shadow-[0_0_20px_rgba(223,255,94,0.12)]">
+          <MapPin size={32} />
+        </div>
 
-      <p className="text-green-800 mb-3">
-        {location || "Choose your delivery location"}
-      </p>
+        <h3 className="text-2xl font-extrabold text-white mb-2">
+          Delivery Location
+        </h3>
 
-      {location && (
-        <p className="text-sm text-green-600 mb-4">
-          Estimated delivery: 10–15 minutes
+        <p className="text-purple-200 mb-3">
+          {location || "Choose your delivery location"}
         </p>
-      )}
 
-      <input
-        value={manualLocation}
-        onChange={(e) => setManualLocation(e.target.value)}
-        placeholder="Enter area / city"
-        className="w-full mb-3 px-4 py-2 rounded-xl outline-none border border-green-200"
-      />
+        {location && (
+          <p className="inline-flex items-center gap-2 text-sm text-lime-300 bg-lime-300/10 border border-lime-300/20 px-3 py-1 rounded-full mb-4">
+            🚚 Estimated delivery: 10–15 minutes
+          </p>
+        )}
 
-      <div className="flex gap-3 flex-wrap">
-        <button
-          onClick={saveManualLocation}
-          className="bg-white/70 text-green-800 px-5 py-2 rounded-xl shadow"
-        >
-          Select Location
-        </button>
+        <input
+          value={manualLocation}
+          onChange={(e) => setManualLocation(e.target.value)}
+          placeholder="Enter area / city"
+          className="w-full mb-4 px-4 py-3 rounded-2xl bg-[#10081f] border border-purple-400/30 text-white placeholder:text-purple-300 outline-none focus:border-lime-300 focus:shadow-[0_0_20px_rgba(223,255,94,0.2)] transition"
+        />
 
-        <button
-          onClick={useCurrentLocation}
-          className="bg-green-700 text-white px-5 py-2 rounded-xl"
-        >
-          Use Current Location
-        </button>
+        <div className="flex gap-3 flex-wrap">
+          <button
+            onClick={saveManualLocation}
+            className="flex items-center gap-2 bg-[#10081f] hover:bg-[#21123a] border border-purple-400/30 text-purple-100 hover:text-lime-300 px-5 py-3 rounded-2xl transition"
+          >
+            <Navigation size={17} />
+            Select Location
+          </button>
+
+          <button
+            onClick={useCurrentLocation}
+            className="flex items-center gap-2 bg-lime-300 hover:bg-lime-200 text-[#080312] font-extrabold px-5 py-3 rounded-2xl shadow-[0_0_22px_rgba(223,255,94,0.25)] transition hover:scale-[1.02]"
+          >
+            <LocateFixed size={17} />
+            Use Current Location
+          </button>
+        </div>
       </div>
     </div>
   );

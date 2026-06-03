@@ -1,167 +1,118 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
-import { ShoppingBasket } from "lucide-react";
+import { useEffect } from "react";
+import { Leaf, Sparkles } from "lucide-react";
 
 export default function IntroScreen({ onEnter }) {
-  const [basketX, setBasketX] = useState(-120);
-  const [caught, setCaught] = useState(0);
-  const [showPopup, setShowPopup] = useState(false);
-
-  const groceries = ["🍎", "🥦", "🥛", "🍞", "🥕", "🍇"];
+  const groceries = ["🍎", "🥦", "🥛", "🍞", "🥕", "🍇", "🍊", "🥑"];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setBasketX((prev) => (prev >= 120 ? -120 : prev + 40));
-    }, 700);
+    const timer = setTimeout(() => {
+      onEnter();
+    }, 3000);
 
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (caught >= 3) {
-      setShowPopup(true);
-
-      setTimeout(() => {
-        onEnter();
-      }, 2500);
-    }
-  }, [caught, onEnter]);
+    return () => clearTimeout(timer);
+  }, [onEnter]);
 
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-[999] bg-[#FFF8E7] overflow-hidden flex items-center justify-center"
+        className="fixed inset-0 z-[999] bg-[#080312] overflow-hidden flex items-center justify-center text-white"
         exit={{ opacity: 0 }}
       >
-        <motion.div
-          className="absolute w-96 h-96 bg-green-300/30 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.4, 0.8, 0.4],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-          }}
-        />
+        <div className="absolute top-10 left-10 w-80 h-80 bg-lime-300/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-3xl"></div>
 
         {groceries.map((item, index) => (
           <motion.div
             key={index}
-            className="absolute text-5xl"
+            className="absolute text-5xl md:text-6xl"
             initial={{
-              y: -100,
-              x: -250 + index * 90,
+              x: -350 + index * 100,
+              y: 700,
               opacity: 0,
+              scale: 0.8,
             }}
             animate={{
-              y: 700,
-              opacity: 1,
-              rotate: [0, 15, -15, 0],
+              y: [-80, 120, -40],
+              opacity: [0, 1, 0.85],
+              rotate: [0, 12, -12, 0],
+              scale: [0.8, 1.1, 1],
             }}
             transition={{
               duration: 3,
               repeat: Infinity,
-              delay: index * 0.4,
-              ease: "linear",
+              delay: index * 0.25,
+              ease: "easeInOut",
             }}
           >
             {item}
           </motion.div>
         ))}
 
-        <div className="relative text-center z-10">
-          <motion.h1
-            className="text-5xl md:text-6xl font-bold text-green-900"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            FreshGo
-          </motion.h1>
-
-          <motion.p
-            className="mt-4 text-green-700 text-lg"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            Catch 3 fresh items to enter 🍃
-          </motion.p>
-
-          <motion.div className="mt-4 text-2xl font-bold text-green-800">
-            {caught}/3 Items Collected
-          </motion.div>
-
+        <motion.div
+          className="relative z-10 text-center px-6"
+          initial={{ opacity: 0, scale: 0.85, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
           <motion.div
-            className="mt-28 cursor-pointer"
-            animate={{ x: basketX }}
-            transition={{ duration: 0.6 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => {
-              if (caught < 3) {
-                setCaught(caught + 1);
-              }
+            className="mx-auto mb-6 w-24 h-24 rounded-[2rem] bg-gradient-to-br from-[#6D4AFF] to-[#B26BFF] flex items-center justify-center shadow-[0_0_45px_rgba(178,107,255,0.55)]"
+            animate={{
+              y: [0, -10, 0],
+              rotate: [0, 4, -4, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
             }}
           >
-            <ShoppingBasket
-              size={140}
-              className="text-green-800 drop-shadow-2xl"
-              strokeWidth={1.7}
+            <Leaf
+              size={48}
+              className="text-lime-300 drop-shadow-[0_0_18px_rgba(223,255,94,0.8)]"
             />
           </motion.div>
 
-          {caught >= 3 && (
-            <motion.div
-              className="mt-8 text-3xl font-bold text-green-800"
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-            >
-              🛒 FreshGo Ready!
-            </motion.div>
-          )}
-        </div>
+          <motion.h1
+            className="text-6xl md:text-8xl font-black tracking-tight"
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            Fresh
+            <span className="text-lime-300 italic drop-shadow-[0_0_22px_rgba(223,255,94,0.55)]">
+              Go
+            </span>
+          </motion.h1>
 
-        {showPopup && (
           <motion.div
-            className="absolute inset-0 z-20 flex items-center justify-center bg-green-950/40 backdrop-blur-md"
+            className="mt-5 inline-flex items-center gap-2 bg-[#1b0f2d]/80 border border-lime-300/25 text-lime-300 px-5 py-2 rounded-full shadow-[0_0_25px_rgba(223,255,94,0.16)]"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55 }}
+          >
+            <Sparkles size={17} />
+            Powered by AI Shopping
+          </motion.div>
+
+          <motion.p
+            className="mt-5 text-purple-200 text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            transition={{ delay: 0.75 }}
           >
+            Preparing your smart grocery world...
+          </motion.p>
+
+          <div className="mt-8 w-72 md:w-96 h-3 mx-auto bg-[#10081f] border border-purple-400/20 rounded-full overflow-hidden">
             <motion.div
-              className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-[35px] p-8 text-center shadow-2xl max-w-sm mx-4"
-              initial={{ scale: 0.5, opacity: 0, y: 40 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 150 }}
-            >
-              <motion.div
-                className="text-6xl mb-4"
-                animate={{
-                  rotate: [0, 10, -10, 0],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{ duration: 0.8, repeat: Infinity }}
-              >
-                🛒
-              </motion.div>
-
-              <h2 className="text-3xl font-bold text-green-900">
-                Basket Filled!
-              </h2>
-
-              <p className="mt-3 text-green-700">
-                Unlocking your smart grocery world...
-              </p>
-
-              <div className="mt-5 h-2 bg-green-100 rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-green-600"
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 2 }}
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
+              className="h-full bg-lime-300 shadow-[0_0_22px_rgba(223,255,94,0.8)]"
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 3, ease: "easeInOut" }}
+            />
+          </div>
+        </motion.div>
       </motion.div>
     </AnimatePresence>
   );

@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Star, Plus, Heart, ArrowLeft } from "lucide-react";
+import { Star, Plus, Heart, ArrowLeft, ShieldCheck, Truck } from "lucide-react";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -45,10 +45,8 @@ export default function ProductDetails() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[#FFF8E7] flex items-center justify-center">
-        <h1 className="text-3xl font-bold text-green-800">
-          Product not found
-        </h1>
+      <div className="min-h-screen bg-gradient-to-b from-[#12091F] via-[#1B1030] to-[#24163D] flex items-center justify-center text-white">
+        <h1 className="text-3xl font-bold">Product not found</h1>
       </div>
     );
   }
@@ -88,50 +86,75 @@ export default function ProductDetails() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF8E7] py-16 px-6 text-green-950">
+    <div className="min-h-screen bg-gradient-to-b from-[#12091F] via-[#1B1030] to-[#24163D] py-28 px-6 text-white">
       <button
         onClick={() => navigate("/products")}
-        className="mb-8 flex items-center gap-2 text-green-700 font-bold"
+        className="mb-8 flex items-center gap-2 text-[#E9FF70] font-bold"
       >
         <ArrowLeft size={18} />
         Back to Products
       </button>
 
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 bg-white/60 backdrop-blur-xl rounded-[35px] p-8 shadow-2xl">
-        <img
-          src={product.img}
-          alt={product.name}
-          className="w-full h-[420px] object-cover rounded-3xl"
-        />
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 bg-[#FFF8F0]/95 text-black rounded-[40px] p-8 shadow-2xl">
+        <div className="overflow-hidden rounded-[30px] bg-white">
+          <img
+            src={product.img}
+            alt={product.name}
+            className="w-full h-[460px] object-cover hover:scale-110 transition duration-500"
+          />
+        </div>
 
         <div>
-          <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold">
-            {product.category}
-          </span>
+          <div className="flex gap-3 flex-wrap">
+            <span className="bg-[#E9FF70] text-[#12091F] px-4 py-2 rounded-full text-sm font-bold">
+              {product.category}
+            </span>
 
-          <h1 className="text-5xl font-bold mt-5">{product.name}</h1>
+            <span className="bg-[#FFB86B]/30 text-[#8A4A00] px-4 py-2 rounded-full text-sm font-bold">
+              {product.type}
+            </span>
+          </div>
+
+          <h1 className="text-5xl font-extrabold mt-6">
+            {product.name}
+          </h1>
 
           <div className="flex items-center gap-2 mt-4 text-orange-500">
             <Star fill="currentColor" />
             <span className="font-bold">{product.rating}</span>
+            <span className="text-gray-500">| 120+ reviews</span>
           </div>
 
-          <p className="text-3xl font-bold text-green-700 mt-5">
+          <p className="text-4xl font-extrabold text-[#12091F] mt-6">
             ₹{product.price}
           </p>
 
-          <p className="text-green-800 mt-5 leading-7">
+          <p className="text-gray-700 mt-5 leading-7">
             {product.description}
           </p>
 
+          <div className="mt-6 grid sm:grid-cols-2 gap-4">
+            <div className="bg-white rounded-2xl p-4 shadow">
+              <Truck className="text-[#12091F] mb-2" />
+              <h3 className="font-bold">Fast Delivery</h3>
+              <p className="text-sm text-gray-600">Delivered in 10–20 mins</p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-4 shadow">
+              <ShieldCheck className="text-[#12091F] mb-2" />
+              <h3 className="font-bold">Quality Checked</h3>
+              <p className="text-sm text-gray-600">Freshness guaranteed</p>
+            </div>
+          </div>
+
           <div className="mt-6">
-            <p className="text-sm text-green-700 mb-2">
+            <p className="text-sm text-gray-700 mb-2 font-bold">
               Freshness Meter 🌿 {product.freshness}
             </p>
 
-            <div className="h-3 bg-green-100 rounded-full overflow-hidden">
+            <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
               <div
-                className="h-full bg-green-600"
+                className="h-full bg-[#E9FF70]"
                 style={{ width: product.freshness }}
               />
             </div>
@@ -140,7 +163,7 @@ export default function ProductDetails() {
           <div className="mt-8 flex gap-4">
             <button
               onClick={addToCart}
-              className="flex-1 bg-green-700 text-white py-4 rounded-2xl flex items-center justify-center gap-2"
+              className="flex-1 bg-[#12091F] text-white py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#24163D]"
             >
               <Plus />
               Add to Cart
@@ -148,7 +171,7 @@ export default function ProductDetails() {
 
             <button
               onClick={addToWishlist}
-              className="bg-red-100 text-red-600 px-6 rounded-2xl"
+              className="bg-red-100 text-red-600 px-6 rounded-2xl hover:bg-red-200"
             >
               <Heart />
             </button>

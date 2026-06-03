@@ -1,5 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  User,
+  Mail,
+  Phone,
+  Lock,
+  UserPlus,
+  Sparkles,
+} from "lucide-react";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -11,6 +19,9 @@ export default function Signup() {
     password: "",
     confirmPassword: "",
   });
+
+  const inputClass =
+    "w-full p-4 rounded-2xl mb-4 border border-[#E8DCCB] outline-none focus:border-[#E9FF70] focus:ring-2 focus:ring-[#E9FF70]/30";
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,18 +36,21 @@ export default function Signup() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-  name: form.name,
-  email: form.email,
-  phone: form.phone,
-  password: form.password,
-}),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            password: form.password,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -52,45 +66,71 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FFF8E7]">
+    <div className="min-h-screen bg-gradient-to-b from-[#12091F] via-[#1B1030] to-[#24163D] flex items-center justify-center px-6 py-20">
       <form
         onSubmit={handleSignup}
-        className="bg-white/60 backdrop-blur-xl p-8 rounded-[30px] shadow-2xl w-full max-w-md"
+        className="bg-[#FFF8F0]/95 text-black p-8 rounded-[35px] shadow-2xl w-full max-w-md"
       >
-        <h1 className="text-4xl font-bold text-green-800 mb-2">
-          Create Account
-        </h1>
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[#12091F] to-[#6D4AFF] text-[#E9FF70] flex items-center justify-center mb-4">
+            <Sparkles size={34} />
+          </div>
 
-        <p className="text-green-700 mb-6">
-          Join FreshGo smart grocery world
-        </p>
+          <h1 className="text-4xl font-extrabold">
+            Create Account
+          </h1>
+
+          <p className="text-gray-600 mt-2">
+            Join the FreshGo smart grocery world
+          </p>
+        </div>
+
+        <label className="font-bold flex items-center gap-2 mb-2">
+          <User size={18} />
+          Full Name
+        </label>
 
         <input
           name="name"
           value={form.name}
           onChange={handleChange}
           placeholder="Full Name"
-          className="input"
+          className={inputClass}
           required
         />
+
+        <label className="font-bold flex items-center gap-2 mb-2">
+          <Mail size={18} />
+          Email
+        </label>
 
         <input
           name="email"
           value={form.email}
           onChange={handleChange}
           placeholder="Email"
-          className="input"
+          className={inputClass}
           required
         />
+
+        <label className="font-bold flex items-center gap-2 mb-2">
+          <Phone size={18} />
+          Phone Number
+        </label>
 
         <input
           name="phone"
           value={form.phone}
           onChange={handleChange}
           placeholder="Phone Number"
-          className="input"
+          className={inputClass}
           required
         />
+
+        <label className="font-bold flex items-center gap-2 mb-2">
+          <Lock size={18} />
+          Password
+        </label>
 
         <input
           name="password"
@@ -98,9 +138,14 @@ export default function Signup() {
           type="password"
           onChange={handleChange}
           placeholder="Password"
-          className="input"
+          className={inputClass}
           required
         />
+
+        <label className="font-bold flex items-center gap-2 mb-2">
+          <Lock size={18} />
+          Confirm Password
+        </label>
 
         <input
           name="confirmPassword"
@@ -108,17 +153,24 @@ export default function Signup() {
           type="password"
           onChange={handleChange}
           placeholder="Confirm Password"
-          className="input"
+          className={inputClass}
           required
         />
 
-        <button className="w-full bg-green-700 text-white py-3 rounded-2xl mt-4">
+        <button
+          type="submit"
+          className="w-full bg-[#12091F] hover:bg-[#24163D] text-white py-4 rounded-2xl mt-3 flex items-center justify-center gap-2 font-bold"
+        >
+          <UserPlus size={18} />
           Create Account
         </button>
 
-        <p className="text-center mt-5">
+        <p className="text-center mt-6 text-gray-700">
           Already have an account?{" "}
-          <Link to="/login" className="text-green-700 font-bold">
+          <Link
+            to="/login"
+            className="text-[#6D4AFF] font-extrabold"
+          >
             Login
           </Link>
         </p>

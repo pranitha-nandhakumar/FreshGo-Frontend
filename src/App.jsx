@@ -26,6 +26,7 @@ import EditProfile from "./pages/EditProfile";
 import Addresses from "./pages/Addresses";
 import Wishlist from "./pages/Wishlist";
 import ProductDetails from "./pages/ProductDetails";
+import Reviews from "./pages/Reviews";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -59,6 +60,7 @@ function App() {
             <Route path="/addresses" element={<Addresses />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/reviews" element={<Reviews />} />
           </Routes>
         </main>
         

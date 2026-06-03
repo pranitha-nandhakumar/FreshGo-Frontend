@@ -238,16 +238,17 @@ const categoryFromUrl = searchParams.get("category");
 };
 
   return (
-    <div className="min-h-screen bg-[#FFF8E7] text-green-950 py-10">
+    <div className="min-h-screen bg-gradient-to-b from-[#12091F] via-[#1B1030] to-[#24163D] text-white py-10">
       <h1 className="text-5xl font-bold text-center mb-4">
-        Smart Grocery Products
+        FreshGo Marketplace ✨
       </h1>
 
-      <p className="text-center text-green-700 mb-10">
-        AI-powered fresh picks for your lifestyle
+      <p className="text-center text-grey-700 mb-10">
+        Handpicked groceries, essentials and smart recommendations.
       </p>
 
-      <div className="max-w-4xl mx-auto bg-white/50 backdrop-blur-xl rounded-3xl p-4 flex items-center gap-3 shadow-lg">
+      <div className="max-w-4xl mx-auto bg-white/10
+border border-white/10 backdrop-blur-xl rounded-3xl p-4 flex items-center gap-3 shadow-lg">
         <Search className="text-green-700" />
 
         <input
@@ -265,8 +266,8 @@ const categoryFromUrl = searchParams.get("category");
             onClick={() => setSelectedFilter(filter)}
             className={`px-5 py-2 rounded-full shadow transition ${
               selectedFilter === filter
-                ? "bg-green-700 text-white"
-                : "bg-white/60 hover:bg-green-100"
+                ? "bg-[#E9FF70] text-[#12091F] text-black"
+                : "bg-white/10 text-white hover:bg-green-100"
             }`}
           >
             {filter}
@@ -293,14 +294,21 @@ const categoryFromUrl = searchParams.get("category");
             <motion.div
               key={product.id}
               whileHover={{ y: -10, scale: 1.03 }}
-              className="bg-white/50 backdrop-blur-xl border border-white/50 rounded-[35px] p-6 shadow-xl"
+              className="bg-white/10
+border border-white/10 backdrop-blur-xl border border-white/50 rounded-[35px] p-6 shadow-xl"
             >
               <Link to={`/products/${product.id}`}>
-  <img
+  <div className="overflow-hidden rounded-2xl mb-5">
+  <motion.img
+    whileHover={{ scale: 1.12 }}
+    transition={{ duration: 0.4 }}
+    
+
     src={product.img}
     alt={product.name}
     className="w-full h-40 object-cover rounded-2xl mb-5 cursor-pointer"
   />
+  </div>
 </Link>
 <Link to={`/products/${product.id}`}>
   <h2 className="text-2xl font-bold hover:text-green-700 cursor-pointer">
@@ -350,7 +358,7 @@ const categoryFromUrl = searchParams.get("category");
 <div className="mt-6 flex gap-3">
   <button
     onClick={() => addToCart(product)}
-    className="flex-1 bg-green-700 text-white py-3 rounded-2xl flex items-center justify-center gap-2 hover:bg-green-800 transition"
+    className="flex-1 bg-[#E9FF70] text-[#12091F] text-black py-3 rounded-2xl flex items-center justify-center gap-2 hover:bg-green-800 transition"
   >
     <Plus size={18} />
     Add to Cart

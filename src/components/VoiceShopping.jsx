@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mic } from "lucide-react";
+import { Mic, Sparkles, Volume2 } from "lucide-react";
 
 export default function VoiceShopping() {
   const [message, setMessage] = useState("Say: Add milk and bread");
@@ -73,19 +73,35 @@ export default function VoiceShopping() {
   };
 
   return (
-    <div className="bg-white/40 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-white/40">
-      <Mic className="text-green-700 mb-4" size={36} />
+    <div className="relative overflow-hidden bg-[#1b0f2d]/80 backdrop-blur-2xl rounded-[2rem] p-6 border border-purple-400/20 shadow-[0_0_35px_rgba(168,85,247,0.12)] hover:border-lime-300/35 transition">
+      <div className="absolute -top-14 -right-14 w-44 h-44 bg-lime-300/10 rounded-full blur-3xl"></div>
 
-      <h3 className="text-xl font-bold mb-2">Voice Shopping</h3>
+      <div className="relative z-10">
+        <div className="w-14 h-14 rounded-2xl bg-lime-300/10 border border-lime-300/30 flex items-center justify-center text-lime-300 mb-4 shadow-[0_0_20px_rgba(223,255,94,0.12)]">
+          <Mic size={32} />
+        </div>
 
-      <p className="text-green-800 mb-4">{message}</p>
+        <h3 className="text-2xl font-extrabold text-white mb-2">
+          Voice Shopping
+        </h3>
 
-      <button
-        onClick={startVoiceShopping}
-        className="bg-green-700 text-white px-5 py-2 rounded-xl"
-      >
-        Start Voice Shopping
-      </button>
+        <p className="text-purple-200 mb-4 min-h-[48px] leading-relaxed">
+          {message}
+        </p>
+
+        <div className="mb-5 inline-flex items-center gap-2 bg-[#10081f] border border-purple-400/25 text-purple-200 px-3 py-2 rounded-full text-sm">
+          <Volume2 size={15} className="text-lime-300" />
+          Try saying: Add milk and bread
+        </div>
+
+        <button
+          onClick={startVoiceShopping}
+          className="w-full flex items-center justify-center gap-2 bg-lime-300 hover:bg-lime-200 text-[#080312] font-extrabold px-5 py-3 rounded-2xl shadow-[0_0_22px_rgba(223,255,94,0.25)] transition hover:scale-[1.02]"
+        >
+          <Sparkles size={17} />
+          Start Voice Shopping
+        </button>
+      </div>
     </div>
   );
 }
