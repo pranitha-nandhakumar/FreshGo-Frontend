@@ -15,7 +15,7 @@ export default function AdminDashboard() {
   const fetchUsers = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/auth/users"
+        "https://freshgo-backend.onrender.com/api/auth/users"
       );
 
       const data = await res.json();
@@ -28,7 +28,7 @@ export default function AdminDashboard() {
   const fetchOrders = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/orders"
+        "https://freshgo-backend.onrender.com/api/orders"
       );
 
       const data = await res.json();
@@ -41,7 +41,7 @@ export default function AdminDashboard() {
   const fetchMessages = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/contact"
+        "https://freshgo-backend.onrender.com/api/contact"
       );
 
       const data = await res.json();

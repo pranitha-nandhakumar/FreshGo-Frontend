@@ -26,7 +26,7 @@ export default function Orders() {
 
       try {
         const response = await fetch(
-          `http://localhost:5000/api/orders/user/${user.id}`
+          `https://freshgo-backend.onrender.com/api/orders/user/${user.id}`
         );
 
         const data = await response.json();

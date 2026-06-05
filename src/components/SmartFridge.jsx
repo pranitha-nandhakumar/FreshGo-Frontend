@@ -1,8 +1,19 @@
 import { useState } from "react";
-import { Refrigerator, Plus, ScanLine, Sparkles } from "lucide-react";
+import {
+  Refrigerator,
+  Plus,
+  ScanLine,
+  Sparkles,
+  Upload,
+  Camera,
+  X,
+} from "lucide-react";
 
 export default function SmartFridge() {
   const [scanned, setScanned] = useState(false);
+  const [scanning, setScanning] = useState(false);
+  const [preview, setPreview] = useState(null);
+  const [detectedItems, setDetectedItems] = useState([]);
 
   const missingItems = [
     {
@@ -33,6 +44,39 @@ export default function SmartFridge() {
       quantity: 1,
     },
   ];
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+    setPreview(imageUrl);
+    setScanned(false);
+  };
+
+  const scanFridge = () => {
+  if (!preview) {
+    alert("Please upload a fridge image first 📷");
+    return;
+  }
+
+  setScanning(true);
+  setScanned(false);
+
+  setTimeout(() => {
+    setDetectedItems([
+      "Tomato",
+      "Eggs",
+      "Milk",
+      "Butter",
+      "Cheese",
+    ]);
+
+    setScanning(false);
+    setScanned(true);
+  }, 2500);
+};
 
   const addAllToCart = () => {
     const cart = JSON.parse(localStorage.getItem("freshgoCart")) || [];
@@ -68,22 +112,69 @@ export default function SmartFridge() {
         </div>
 
         <h3 className="text-2xl font-extrabold text-white mb-2">
-          Smart Fridge
+          AI Smart Fridge
         </h3>
 
         <p className="text-purple-200 mb-4 leading-relaxed">
-          {scanned
-            ? "AI detected low-stock groceries from your fridge."
-            : "Scan your fridge and let AI suggest items to refill."}
+          Upload or capture your fridge image and let FreshGo AI suggest refill
+          items.
         </p>
+
+        {preview ? (
+          <div className="relative mb-4 rounded-2xl overflow-hidden border border-purple-400/20">
+            <img
+              src={preview}
+              alt="Fridge preview"
+              className="w-full h-44 object-cover"
+            />
+
+            <button
+              onClick={() => {
+                setPreview(null);
+                setScanned(false);
+                setScanning(false);
+              }}
+              className="absolute top-3 right-3 bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        ) : (
+          <label className="mb-4 flex flex-col items-center justify-center border-2 border-dashed border-lime-300/25 rounded-2xl p-6 cursor-pointer hover:border-lime-300/60 transition bg-[#10081f]/70">
+            <Upload className="text-lime-300 mb-3" size={32} />
+
+            <p className="text-white font-bold">Upload Fridge Image</p>
+            <p className="text-purple-300 text-sm mt-1">
+              JPG, PNG or camera photo
+            </p>
+
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+          </label>
+        )}
 
         {!scanned ? (
           <button
-            onClick={() => setScanned(true)}
-            className="w-full flex items-center justify-center gap-2 bg-lime-300 hover:bg-lime-200 text-[#080312] font-extrabold px-5 py-3 rounded-2xl shadow-[0_0_22px_rgba(223,255,94,0.25)] transition hover:scale-[1.02]"
+            onClick={scanFridge}
+            disabled={scanning}
+            className="w-full flex items-center justify-center gap-2 bg-lime-300 hover:bg-lime-200 disabled:opacity-70 disabled:cursor-not-allowed text-[#080312] font-extrabold px-5 py-3 rounded-2xl shadow-[0_0_22px_rgba(223,255,94,0.25)] transition hover:scale-[1.02]"
           >
-            <ScanLine size={17} />
-            Scan Fridge
+            {scanning ? (
+              <>
+                <Sparkles size={17} className="animate-spin" />
+                AI Scanning...
+              </>
+            ) : (
+              <>
+                <ScanLine size={17} />
+                AI Scan Fridge
+              </>
+            )}
           </button>
         ) : (
           <>
@@ -91,6 +182,20 @@ export default function SmartFridge() {
               <Sparkles size={15} />
               AI refill suggestions ready
             </div>
+            <h4 className="text-lime-300 font-bold mb-3 mt-4">
+  🤖 AI Detected Items
+</h4>
+
+<div className="flex flex-wrap gap-2 mb-5">
+  {detectedItems.map((item) => (
+    <span
+      key={item}
+      className="bg-lime-300/10 border border-lime-300/20 text-lime-300 px-3 py-2 rounded-full text-sm"
+    >
+      {item}
+    </span>
+  ))}
+</div>
 
             <div className="space-y-3 mb-5">
               {missingItems.map((item) => (

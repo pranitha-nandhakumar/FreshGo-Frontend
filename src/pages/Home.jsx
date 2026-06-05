@@ -1,8 +1,13 @@
+
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import LocationFinder from "../components/LocationFinder";
 import VoiceShopping from "../components/VoiceShopping";
 import SmartFridge from "../components/SmartFridge";
+import heroFreshgo from "../assets/hero-freshgo-new.png";
+import RecipeSuggestions from "../components/RecipeSuggestions";
+
 import {
   Search,
   SlidersHorizontal,
@@ -18,7 +23,48 @@ import {
 } from "lucide-react";
 
 export default function Home() {
-  const categories = ["Vegetables", "Fruits", "Dairy", "Bakery", "Drinks"];
+  const categories = [
+    {
+      name: "Vegetables",
+      img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500",
+    },
+    {
+      name: "Fruits",
+      img: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=500",
+    },
+    {
+      name: "Dairy",
+      img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500",
+    },
+    {
+      name: "Bakery",
+      img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500",
+    },
+    {
+      name: "Beverages",
+      img: "https://images.unsplash.com/photo-1581006852262-e4307cf6283a?w=500",
+    },
+  ];
+
+  
+
+  const imageBanners = [
+    {
+      title: "Organic Fresh Picks",
+      text: "Handpicked fruits and vegetables for your everyday meals.",
+      img: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=700",
+    },
+    {
+      title: "Daily Essentials",
+      text: "Milk, bread, rice, oil and more delivered quickly.",
+      img: "https://images.unsplash.com/photo-1543168256-418811576931?w=700",
+    },
+    {
+      title: "Healthy Lifestyle",
+      text: "Smart grocery picks based on your mood and lifestyle.",
+      img: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=700",
+    },
+  ];
 
   const featured = [
     {
@@ -50,35 +96,123 @@ export default function Home() {
       offer: "12% OFF",
     },
   ];
-const recommended = [
+
+  const recommended = [
+    {
+      name: "Milk",
+      reason: "Daily essential",
+      img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",
+    },
+    {
+      name: "Bread",
+      reason: "Perfect with breakfast",
+      img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400",
+    },
+    {
+      name: "Chocolate",
+      reason: "Popular craving pick",
+      img: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400",
+    },
+    {
+      name: "Shampoo",
+      reason: "Monthly personal care",
+      img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400",
+    },
+  ];
+  const flashDeals = [
   {
     name: "Milk",
-    reason: "Daily essential",
-    img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",
+    price: 35,
+    oldPrice: 45,
+    img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500",
+    offer: "22% OFF",
   },
   {
     name: "Bread",
-    reason: "Perfect with breakfast",
-    img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400",
+    price: 29,
+    oldPrice: 40,
+    img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500",
+    offer: "27% OFF",
+  },
+  {
+    name: "Fresh Apples",
+    price: 99,
+    oldPrice: 120,
+    img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500",
+    offer: "18% OFF",
   },
   {
     name: "Chocolate",
-    reason: "Popular craving pick",
-    img: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400",
-  },
-  {
-    name: "Shampoo",
-    reason: "Monthly personal care",
-    img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400",
+    price: 69,
+    oldPrice: 90,
+    img: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=500",
+    offer: "23% OFF",
   },
 ];
-  return (
-    <div className="min-h-screen bg-[#12091F] text-[#FFF7ED] overflow-hidden">
-      {/* HERO */}
-      <section className="relative px-6 pt-36 pb-20">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#E9FF70]/20 blur-[100px] rounded-full" />
-        <div className="absolute bottom-10 right-10 w-72 h-72 bg-[#FFB86B]/20 blur-[100px] rounded-full" />
+  const [selectedLocation, setSelectedLocation] = useState("Chennai,India");
 
+const locations = [
+  "Chennai, India",
+  "Coimbatore, India",
+  "Erode, India",
+  "Salem, India",
+  "Tiruchengode, India",
+  "Bangalore, India",
+];
+
+  return (
+    <div className="min-h-screen bg-[#080312] text-[#FFF7ED] overflow-hidden">
+      {/* HERO */}
+      <section className="relative px-6 pt-8 pb-20">
+        <div className="max-w-7xl mx-auto mb-10">
+  <div className="bg-[#1E1433]/80 border border-white/10 rounded-[30px] px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl shadow-purple-950/30">
+    
+    <div className="flex items-center gap-3">
+      <div className="w-12 h-12 rounded-2xl bg-[#E9FF70]/15 flex items-center justify-center text-[#E9FF70]">
+        <MapPin size={22} />
+      </div>
+
+      <div>
+        <p className="text-sm text-[#C9B8E8]">Delivering to</p>
+        <select
+  value={selectedLocation}
+  onChange={(e) => setSelectedLocation(e.target.value)}
+  className="bg-[#12091F] text-[#E9FF70] font-bold px-2 py-1 rounded-lg outline-none cursor-pointer border border-[#E9FF70]/20"
+>
+  {locations.map((loc) => (
+    <option key={loc} value={loc} className="bg-[#12091F] text-white">
+      {loc}
+    </option>
+  ))}
+</select>
+      </div>
+    </div>
+
+    <div className="flex items-center gap-3">
+      <span className="bg-white/10 border border-white/10 px-4 py-2 rounded-full text-sm">
+        🚚 10–20 min delivery
+      </span>
+
+      <span className="bg-white/10 border border-white/10 px-4 py-2 rounded-full text-sm">
+        🥦 Fresh daily stock
+      </span>
+
+      <span className="bg-white/10 border border-white/10 px-4 py-2 rounded-full text-sm">
+        🤖 AI smart picks
+      </span>
+    </div>
+
+    <Link to="/products">
+      <button className="bg-[#E9FF70] text-[#12091F] px-6 py-3 rounded-full font-bold">
+        Start Shopping
+      </button>
+    </Link>
+  </div>
+</div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#E9FF70]/20 blur-[100px] rounded-full" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-600/25 blur-[120px] rounded-full" />
+
+        
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           {/* LEFT IMAGE CARD */}
           <motion.div
@@ -91,12 +225,22 @@ const recommended = [
 
               <div className="relative z-10 rounded-[35px] overflow-hidden bg-[#12091F]">
                 <img
-                  src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200"
-                  alt="Fresh groceries"
-                  className="w-full h-[520px] object-cover rounded-[35px]"
-                />
+  src={heroFreshgo}
+  alt="Fresh grocery shopping"
+  className="w-full h-[520px] object-cover rounded-[35px]"
+/>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#12091F] via-transparent to-transparent" />
               </div>
+
+              <motion.div
+                className="absolute top-14 right-14 bg-[#080312]/80 border border-[#E9FF70]/30 rounded-full w-24 h-24 flex items-center justify-center text-center text-xs font-bold text-[#E9FF70] shadow-[0_0_30px_rgba(233,255,112,0.25)]"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+              >
+                SHOP SMART
+                <br />
+                EAT FRESH
+              </motion.div>
 
               <div className="relative z-20 grid grid-cols-3 gap-4 -mt-24">
                 {[
@@ -144,7 +288,7 @@ const recommended = [
 
                 <div className="flex items-center gap-2 text-[#E9FF70] font-semibold">
                   <MapPin size={18} />
-                  Chennai, India
+                  {selectedLocation}
                 </div>
               </div>
 
@@ -203,6 +347,32 @@ const recommended = [
         </div>
       </section>
 
+      {/* IMAGE BANNERS */}
+      <section className="px-6 py-10">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6">
+          {imageBanners.map((item) => (
+            <motion.div
+              key={item.title}
+              whileHover={{ y: -8 }}
+              className="relative h-72 rounded-[35px] overflow-hidden border border-white/10 shadow-2xl shadow-purple-950/30"
+            >
+              <img
+                src={item.img}
+                alt={item.title}
+                className="w-full h-full object-cover"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080312] via-[#080312]/50 to-transparent" />
+
+              <div className="absolute bottom-6 left-6 right-6">
+                <h3 className="text-2xl font-bold">{item.title}</h3>
+                <p className="text-[#C9B8E8] mt-2">{item.text}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* OFFER */}
       <section className="px-6 py-10">
         <div className="max-w-7xl mx-auto bg-[#1E1433]/80 border border-white/10 rounded-[35px] p-8 grid md:grid-cols-2 gap-8 items-center shadow-2xl shadow-purple-950/30">
@@ -248,17 +418,85 @@ const recommended = [
             </Link>
           </div>
 
-          <div className="flex gap-4 overflow-x-auto pb-2">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
             {categories.map((cat) => (
-              <Link key={cat} to={`/products?category=${cat}`}>
-                <button className="bg-[#1E1433]/80 border border-white/10 px-6 py-3 rounded-full hover:bg-[#E9FF70] hover:text-[#12091F] transition whitespace-nowrap">
-                  {cat}
-                </button>
+              <Link key={cat.name} to={`/products?category=${cat.name}`}>
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  className="relative h-44 rounded-[30px] overflow-hidden border border-white/10 shadow-xl shadow-purple-950/30 group"
+                >
+                  <img
+                    src={cat.img}
+                    alt={cat.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#080312] via-[#080312]/40 to-transparent" />
+
+                  <h3 className="absolute bottom-5 left-5 text-xl font-bold">
+                    {cat.name}
+                  </h3>
+                </motion.div>
               </Link>
             ))}
           </div>
         </div>
       </section>
+      {/* FLASH DEALS */}
+<section className="px-6 py-10">
+  <div className="max-w-7xl mx-auto">
+    <div className="flex justify-between items-center mb-6">
+      <div>
+        <h2 className="text-3xl font-bold">⚡ Flash Deals</h2>
+        <p className="text-[#C9B8E8] mt-2">
+          Limited-time FreshGo offers ending soon.
+        </p>
+      </div>
+
+      <div className="bg-[#1E1433]/80 border border-[#E9FF70]/20 text-[#E9FF70] px-5 py-3 rounded-2xl font-bold">
+        Ends in 03:45:22
+      </div>
+    </div>
+
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {flashDeals.map((deal) => (
+        <motion.div
+          key={deal.name}
+          whileHover={{ y: -8 }}
+          className="bg-[#1E1433]/80 border border-white/10 rounded-[30px] p-5 shadow-xl shadow-purple-950/30 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 bg-[#E9FF70] text-[#12091F] px-4 py-2 rounded-bl-2xl text-sm font-black">
+            {deal.offer}
+          </div>
+
+          <img
+            src={deal.img}
+            alt={deal.name}
+            className="w-full h-40 object-cover rounded-3xl mt-6"
+          />
+
+          <h3 className="text-xl font-bold mt-4">{deal.name}</h3>
+
+          <div className="flex items-center gap-2 mt-3">
+            <span className="text-2xl font-extrabold text-[#E9FF70]">
+              ₹{deal.price}
+            </span>
+
+            <span className="text-[#C9B8E8]/60 line-through">
+              ₹{deal.oldPrice}
+            </span>
+          </div>
+
+          <Link to="/products">
+            <button className="mt-5 w-full bg-[#E9FF70] text-[#12091F] font-bold py-3 rounded-2xl">
+              Shop Deal
+            </button>
+          </Link>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* FEATURED PRODUCTS */}
       <section className="px-6 py-10 pb-24">
@@ -320,58 +558,53 @@ const recommended = [
           </div>
         </div>
       </section>
+
       {/* RECOMMENDED FOR YOU */}
-<section className="px-6 py-10">
-  <div className="max-w-7xl mx-auto">
-    <div className="flex justify-between items-center mb-6">
-      <h2 className="text-3xl font-bold">Recommended For You 🎯</h2>
-      <Link to="/products" className="text-[#E9FF70]">See All</Link>
-    </div>
+      <section className="px-6 py-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-3xl font-bold">Recommended For You 🎯</h2>
+            <Link to="/products" className="text-[#E9FF70]">
+              See All
+            </Link>
+          </div>
 
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {recommended.map((item) => (
-        <motion.div
-          key={item.name}
-          whileHover={{ y: -8 }}
-          className="bg-[#1E1433]/80 border border-white/10 rounded-[30px] p-5 shadow-xl shadow-purple-950/30"
-        >
-          <img
-            src={item.img}
-            alt={item.name}
-            className="w-full h-40 object-cover rounded-3xl"
-          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {recommended.map((item) => (
+              <motion.div
+                key={item.name}
+                whileHover={{ y: -8 }}
+                className="bg-[#1E1433]/80 border border-white/10 rounded-[30px] p-5 shadow-xl shadow-purple-950/30"
+              >
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="w-full h-40 object-cover rounded-3xl"
+                />
 
-          <h3 className="text-xl font-bold mt-4">{item.name}</h3>
-          <p className="text-[#C9B8E8] mt-2">{item.reason}</p>
+                <h3 className="text-xl font-bold mt-4">{item.name}</h3>
+                <p className="text-[#C9B8E8] mt-2">{item.reason}</p>
 
-          <Link to="/products">
-            <button className="mt-5 w-full bg-[#E9FF70] text-[#12091F] font-bold py-2 rounded-xl">
-              Add from Products
-            </button>
-          </Link>
-        </motion.div>
-      ))}
-    </div>
-  </div>
-</section>
+                <Link to="/products">
+                  <button className="mt-5 w-full bg-[#E9FF70] text-[#12091F] font-bold py-2 rounded-xl">
+                    Add from Products
+                  </button>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-{/* SMART FEATURES */}
-<section className="px-6 py-10">
-  <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6">
-    <div className="bg-[#1E1433]/80 border border-white/10 rounded-[30px] p-5 shadow-xl shadow-purple-950/30"
-        >
-      <SmartFridge />
-    </div>
-
-    <div className="bg-[#1E1433]/80 border border-white/10 rounded-[30px] p-4 shadow-xl">
-      <LocationFinder />
-    </div>
-
-    <div className="bg-[#1E1433]/80 border border-white/10 rounded-[30px] p-4 shadow-xl">
-      <VoiceShopping />
-    </div>
-  </div>
-</section>
+      {/* SMART FEATURES */}
+      <section className="px-6 py-10">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <SmartFridge />
+  <LocationFinder />
+  <VoiceShopping />
+  <RecipeSuggestions />
+</div>
+      </section>
 
       {/* AI STRIP */}
       <section className="px-6 pb-20">

@@ -27,6 +27,8 @@ import Addresses from "./pages/Addresses";
 import Wishlist from "./pages/Wishlist";
 import ProductDetails from "./pages/ProductDetails";
 import Reviews from "./pages/Reviews";
+import OrderTracking from "./pages/OrderTracking";
+import FreshGoAssistant from "./components/FreshGoAssistant";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -35,10 +37,10 @@ function App() {
     <BrowserRouter>
       {showIntro && <IntroScreen onEnter={() => setShowIntro(false)} />}
 
-      <div className="min-h-screen bg-[#FFF8E7]">
+      <div className="min-h-screen bg-[#080312]">
         <Navbar />
 
-        <main className="pt-28 px-6">
+        <main className="pt-24 px-6">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
@@ -61,6 +63,8 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/reviews" element={<Reviews />} />
+            <Route path="/order-tracking" element={<OrderTracking />} />
+            
           </Routes>
         </main>
         
@@ -68,6 +72,7 @@ function App() {
 
      <Footer />
       </div>
+      <FreshGoAssistant />
     </BrowserRouter>
   );
 }
