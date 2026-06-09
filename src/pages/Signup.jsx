@@ -13,7 +13,8 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    name: "",
+     firstName: "",
+  lastName: "",
     email: "",
     phone: "",
     password: "",
@@ -44,7 +45,8 @@ export default function Signup() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name: form.name,
+            firstName: form.firstName,
+  lastName: form.lastName,
             email: form.email,
             phone: form.phone,
             password: form.password,
@@ -91,13 +93,20 @@ export default function Signup() {
         </label>
 
         <input
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Full Name"
-          className={inputClass}
-          required
-        />
+  type="text"
+  name="firstName"
+  placeholder="First Name"
+  value={form.firstName}
+  onChange={handleChange}
+/>
+
+<input
+  type="text"
+  name="lastName"
+  placeholder="Last Name"
+  value={form.lastName}
+  onChange={handleChange}
+/>
 
         <label className="font-bold flex items-center gap-2 mb-2">
           <Mail size={18} />

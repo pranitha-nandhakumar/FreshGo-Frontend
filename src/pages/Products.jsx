@@ -9,6 +9,8 @@ export default function Products() {
   const [searchParams] = useSearchParams();
 const categoryFromUrl = searchParams.get("category");
 const [quantities, setQuantities] = useState({});
+const [addedItems, setAddedItems] = useState({});
+
   const products = [
   {
     id: 1,
@@ -566,46 +568,57 @@ border border-white/10 backdrop-blur-xl border border-white/50 rounded-[35px] p-
                   Harvested 5 hours ago
                 </p>
               </div>
-<div className="mt-6 grid grid-cols-[70px_1fr_50px] gap-3 items-center">
-
-  {/* Quantity Selector */}
-  <div className="flex items-center justify-between bg-[#10081f] border border-purple-400/30 rounded-2xl px-2 py-4">
+<div className="mt-6 grid grid-cols-[1fr_52px] gap-3 items-center">
+  {!addedItems[product.id] ? (
     <button
-      onClick={() => decreaseQuantity(product.id)}
-      className="text-lime-300 font-bold text-xl"
+      onClick={() =>
+        setAddedItems((prev) => ({
+          ...prev,
+          [product.id]: true,
+        }))
+      }
+      className="bg-[#E9FF70] text-[#12091F] font-extrabold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#dfff45] transition text-xl shadow-[0_0_20px_rgba(233,255,112,0.25)]"
     >
-      -
+      <Plus size={20} />
+      Add
     </button>
+  ) : (
+    <div className="grid grid-cols-[1fr_110px] gap-3">
+      <div className="flex items-center justify-between bg-[#10081f] border border-purple-400/30 rounded-2xl px-5 py-4">
+        <button
+          onClick={() => decreaseQuantity(product.id)}
+          className="text-lime-300 font-bold text-xl"
+        >
+          -
+        </button>
 
-    <span className="text-white font-bold text-lg">
-      {quantities[product.id] || 1}
-    </span>
+        <span className="text-white font-bold text-lg">
+          {quantities[product.id] || 1}
+        </span>
 
-    <button
-      onClick={() => increaseQuantity(product.id)}
-      className="text-lime-300 font-bold text-xl"
-    >
-      +
-    </button>
-  </div>
+        <button
+          onClick={() => increaseQuantity(product.id)}
+          className="text-lime-300 font-bold text-xl"
+        >
+          +
+        </button>
+      </div>
 
-  {/* Add Button */}
-  <button
-    onClick={() => addToCart(product)}
-    className="bg-[#E9FF70] text-[#12091F] font-extrabold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#dfff45] transition text-xl shadow-[0_0_20px_rgba(233,255,112,0.25)]"
-  >
-    <Plus size={20} />
-    Add
-  </button>
+      <button
+        onClick={() => addToCart(product)}
+        className="bg-[#E9FF70] text-[#12091F] font-bold rounded-2xl text-sm"
+      >
+        Cart
+      </button>
+    </div>
+  )}
 
-  {/* Wishlist */}
   <button
     onClick={() => addToWishlist(product)}
     className="h-full bg-red-500/10 text-red-400 rounded-2xl hover:bg-red-500 hover:text-white transition flex items-center justify-center"
   >
     <Heart size={20} />
   </button>
-
 </div>
             </motion.div>
             

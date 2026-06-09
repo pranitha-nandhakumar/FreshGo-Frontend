@@ -1,8 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 import Navbar from "./components/Navbar";
 import IntroScreen from "./components/IntroScreen";
+import Footer from "./components/Footer";
+import FreshGoAssistant from "./components/FreshGoAssistant";
 
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -15,20 +17,63 @@ import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
-import Footer from "./components/Footer";
 import Checkout from "./pages/Checkout";
-import ResetPassword from "./pages/ResetPassword";  
+import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import AdminDashboard from "./pages/AdminDashboard";
 import EditProfile from "./pages/EditProfile";
- 
 import Addresses from "./pages/Addresses";
 import Wishlist from "./pages/Wishlist";
 import ProductDetails from "./pages/ProductDetails";
 import Reviews from "./pages/Reviews";
 import OrderTracking from "./pages/OrderTracking";
-import FreshGoAssistant from "./components/FreshGoAssistant";
+
+function AppContent() {
+  const location = useLocation();
+
+  const hideLayout =
+    location.pathname === "/login" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/forgot-password" ||
+    location.pathname.startsWith("/reset-password");
+
+  return (
+    <div className="min-h-screen bg-[#080312]">
+      {!hideLayout && <Navbar />}
+
+      <main className={!hideLayout ? "pt-24 px-6" : ""}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/addresses" element={<Addresses />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/order-tracking" element={<OrderTracking />} />
+        </Routes>
+      </main>
+
+      {!hideLayout && <Footer />}
+      {!hideLayout && <FreshGoAssistant />}
+    </div>
+  );
+}
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -36,43 +81,7 @@ function App() {
   return (
     <BrowserRouter>
       {showIntro && <IntroScreen onEnter={() => setShowIntro(false)} />}
-
-      <div className="min-h-screen bg-[#080312]">
-        <Navbar />
-
-        <main className="pt-24 px-6">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/reset-password/:token" element={<ResetPassword />} />
-            <Route path="/profile" element={<Profile />}/>
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/edit-profile" element={<EditProfile />} />
-            <Route path="/addresses" element={<Addresses />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/products/:id" element={<ProductDetails />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/order-tracking" element={<OrderTracking />} />
-            
-          </Routes>
-        </main>
-        
-
-
-     <Footer />
-      </div>
-      <FreshGoAssistant />
+      <AppContent />
     </BrowserRouter>
   );
 }
