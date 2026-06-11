@@ -20,7 +20,7 @@ export default function ForgotPassword() {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Password reset link sent to your email ✅");
+        alert("✅ Check your email! A password reset link has been sent.");
         setEmail("");
       } else {
         alert(data.message || "Failed to send reset link");
